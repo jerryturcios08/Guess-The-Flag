@@ -15,6 +15,7 @@ class ViewController: UIViewController {
 
     var countries = [String]()
     var score = 0
+    var highScore = 0
     var correctAnswer = 0
     var numberOfQuestionsAsked = 0
 
@@ -34,6 +35,24 @@ class ViewController: UIViewController {
         button1.layer.borderColor = UIColor.lightGray.cgColor
         button2.layer.borderColor = UIColor.lightGray.cgColor
         button3.layer.borderColor = UIColor.lightGray.cgColor
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .pause,
+            target: self,
+            action: #selector(showScore)
+        )
+
+        let defaults = UserDefaults.standard
+
+        if let savedData = defaults.object(forKey: "highScore") as? Data {
+            let jsonDecoder = JSONDecoder()
+
+            do {
+                highScore = try jsonDecoder.decode(Int.self, from: savedData)
+            } catch {
+                print("Failed to decode data from JSON")
+            }
+        }
 
         askQuestion()
     }
@@ -70,7 +89,7 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
 
-        title = "\(countries[correctAnswer].uppercased())? Score: \(score)"
+        title = "\(countries[correctAnswer].uppercased())?"
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
@@ -80,13 +99,22 @@ class ViewController: UIViewController {
         if sender.tag == correctAnswer {
             title = "Correct"
             score += 1
-            message = "Your score is now \(score)."
+
+            // Checks if the player beat their high score
+            if score > highScore {
+                highScore = score
+                message = "Your new high score is \(score)"
+                saveHighScore()
+            } else {
+                message = "Your score is now \(score). Your high score is " +
+                    "\(highScore)"
+            }
         } else {
             title = "Wrong!"
             score -= 1
             message = "That is the flag of " +
                 "\(countries[sender.tag].uppercased()). Your score is now " +
-                "\(score)."
+                "\(score)"
         }
 
         // Create the alert controller with the properties set
@@ -107,5 +135,33 @@ class ViewController: UIViewController {
         )
 
         present(ac, animated: true)
+    }
+
+    @objc func showScore() {
+        let ac = UIAlertController(
+            title: "Paused",
+            message: "The game is paused. Your score is currently " +
+                "\(score). Your high score is \(highScore)",
+            preferredStyle: .alert
+        )
+
+        ac.addAction(
+            UIAlertAction(
+                title: "Play",
+                style: .default,
+                handler: nil
+            )
+        )
+
+        present(ac, animated: true)
+    }
+
+    func saveHighScore() {
+        let jsonEncoder = JSONEncoder()
+
+        if let savedData = try? jsonEncoder.encode(highScore) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "highScore")
+        }
     }
 }
