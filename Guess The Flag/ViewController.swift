@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import UserNotifications
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     @IBOutlet var button1: UIButton!
     @IBOutlet var button2: UIButton!
     @IBOutlet var button3: UIButton!
@@ -54,7 +55,72 @@ class ViewController: UIViewController {
             }
         }
 
+        registerNotifications()
         askQuestion()
+    }
+
+    func registerNotifications() {
+        let center = UNUserNotificationCenter.current()
+
+        center.requestAuthorization(options: [.alert, .badge, .sound]) {
+            [weak self] granted, error in
+
+            if granted {
+                print("YAHHH!")
+                self?.scheduleReminder()
+            } else {
+                print("NOOOO!")
+            }
+        }
+    }
+
+    func scheduleReminder() {
+        registerCategories()
+
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+
+        let content = UNMutableNotificationContent()
+        content.title = "Daily reminder"
+        content.body = "This is your daily reminder to play again!"
+        content.categoryIdentifier = "alarm"
+        content.userInfo = ["userInfo": "fizzbuzz"]
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 86400, repeats: false)
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        center.add(request)
+    }
+
+    func registerCategories() {
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+
+        let show = UNNotificationAction(identifier: "show", title: "Open \"Guess The Flag\"", options: .foreground)
+
+        let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
+        center.setNotificationCategories([category])
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+
+        if let customData = userInfo["customData"] as? String {
+            print("Custom data recieved: \(customData)")
+
+            switch response.actionIdentifier {
+            case UNNotificationDefaultActionIdentifier:
+                let ac = UIAlertController(title: "Default", message: "Default identifier", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Okay", style: .default))
+                present(ac, animated: true)
+                print("Default identifier")
+            default:
+                break
+            }
+        }
+
+        completionHandler()
     }
 
     func askQuestion(action: UIAlertAction! = nil) {

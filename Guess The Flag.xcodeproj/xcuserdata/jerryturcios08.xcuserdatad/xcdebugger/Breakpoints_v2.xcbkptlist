@@ -3,4 +3,73 @@
    uuid = "7CAA6BB0-6781-4079-A1F4-18456659FA6D"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B985B6D-778D-4F69-A84C-F7FB01C97403"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Guess The Flag/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "registerNotifications()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5B985B6D-778D-4F69-A84C-F7FB01C97403 - c5c34c88a1569867"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Guess_The_Flag.ViewController.registerNotifications() -&gt; ()"
+                  moduleName = "Guess The Flag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jerryturcios08/Documents/Xcode/100%20Days%20of%20Swift/Guess%20The%20Flag/Guess%20The%20Flag/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "75">
+               </Location>
+               <Location
+                  uuid = "5B985B6D-778D-4F69-A84C-F7FB01C97403 - 26977388243a6ec7"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Guess_The_Flag.ViewController.registerNotifications() -&gt; ()"
+                  moduleName = "Guess The Flag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jerryturcios08/Documents/Xcode/100%20Days%20of%20Swift/Guess%20The%20Flag/Guess%20The%20Flag/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "125">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            uuid = "9EDC5FB3-2CDC-4D5D-9B18-EB1BF168DE64"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "1"
+            stopOnStyle = "0">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "po $arg1">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
